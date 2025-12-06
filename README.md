@@ -44,7 +44,7 @@ source venv/bin/activate  # macOS/Linux
 ```
 
 # Instale as dependências
-pip install streamlit pandas
+```pip install streamlit pandas```
 
 3. Execução
 Execute o arquivo app.py usando o comando do Streamlit:
