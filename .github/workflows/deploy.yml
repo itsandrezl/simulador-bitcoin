@@ -1,0 +1,27 @@
+name: Deploy (staging e production)
+
+on:
+  push:
+    branches: [develop, main]
+
+jobs:
+  deploy-staging:
+    # Todo merge em develop ou main passa primeiro por staging
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy em staging (simulado)
+        run: echo "Publicando commit ${{ github.sha }} no ambiente STAGING"
+
+  deploy-production:
+    # Só roda em main e depende do staging; o environment "production"
+    # exige aprovação do revisor obrigatório configurado no GitHub.
+    if: github.ref == 'refs/heads/main'
+    needs: deploy-staging
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy em production (simulado)
+        run: echo "Publicando commit ${{ github.sha }} em PRODUCTION"
