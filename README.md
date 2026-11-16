@@ -44,12 +44,12 @@ source venv/bin/activate  # macOS/Linux
 ```
 
 # Instale as dependências
-```pip install streamlit pandas```
+```pip install -r requirements.txt```
 
 3. Execução
-Execute o arquivo app.py usando o comando do Streamlit:
+Execute o arquivo src/app.py usando o comando do Streamlit:
 ```
-streamlit run app.py
+streamlit run src/app.py
 ```
 O projeto será aberto automaticamente no seu navegador, geralmente em http://localhost:8501.
 
@@ -77,3 +77,18 @@ MAX_SUPPLY = 21000000.0     # Limite máximo de BTC
 - Esse programa não pode ser utilizado para minerar bitcoin, ou até mesmo guardá-los.
 - Segurança: Embora o código use criptografia, ele não deve ser usado para fins de segurança ou trnasações reais.
 - Simulação de Ciclo: O ciclo do Halving foi reduzido para fins de demonstração (10 blocos) e não refle o real ciclo do Bitcoin, que é 210.000 blocos da rede Bitcoin real.
+
+
+## 📁 Estrutura do repositório e GCS
+
+| Caminho | Conteúdo |
+| :--- | :--- |
+| `src/` | Código-fonte (`app.py`) |
+| `tests/` | Testes automatizados (pytest) |
+| `docs/gcs/plano-gcs.md` | **Plano de Gerência de Configuração de Software** |
+| `docs/gcs/evidencias/` | Evidências (push recusado, revisores, environments) |
+| `.github/` | Workflows de CI/CD, CODEOWNERS e templates |
+
+Rodar os testes: `pip install -r requirements.txt -r requirements-dev.txt && pytest tests/`
+
+Contribuição: veja [CONTRIBUTING.md](CONTRIBUTING.md).
