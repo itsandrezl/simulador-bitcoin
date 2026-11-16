@@ -79,6 +79,49 @@ MAX_SUPPLY = 21000000.0     # Limite máximo de BTC
 - Simulação de Ciclo: O ciclo do Halving foi reduzido para fins de demonstração (10 blocos) e não refle o real ciclo do Bitcoin, que é 210.000 blocos da rede Bitcoin real.
 
 
+## 🔄 Integração Contínua (CI/CD)
+
+O projeto usa **GitHub Actions**, com dois workflows em `.github/workflows/`.
+
+### CI: `ci.yml`
+
+Roda automaticamente em:
+- **Pull Requests** para `main` ou `develop`;
+- **Push** na `develop`.
+
+O job `build-and-test` executa:
+
+1. Checkout do código.
+2. Configuração do Python 3.10.
+3. Instalação das dependências (`requirements.txt` e `requirements-dev.txt`).
+4. Execução dos testes com `pytest tests/`.
+
+O check `build-and-test` é **obrigatório** para fazer merge na `main`: se os testes falharem, o PR fica bloqueado.
+
+Para rodar localmente:
+
+```bash
+pip install -r requirements.txt -r requirements-dev.txt
+pytest tests/
+```
+
+### CD: `deploy.yml`
+
+Roda a cada push na `develop` ou na `main`:
+
+| Job | Quando roda | Aprovação |
+| :--- | :--- | :--- |
+| `deploy-staging` | `develop` e `main` | Automática |
+| `deploy-production` | Somente `main`, após o staging | **Manual**, pelo revisor obrigatório (`@itsandrezl`) |
+
+O deploy é simulado (apenas registra a publicação), mas os environments `staging` e `production` e a aprovação manual são reais.
+
+### Fluxo completo de uma mudança
+
+`feature/*` → Pull Request → CI verde + aprovação do par → merge em `develop` → staging → Pull Request para `main` → merge → staging → aprovação manual → production.
+
+Detalhes do processo no [Plano de GCS](docs/gcs/plano-gcs.md).
+
 ## 📁 Estrutura do repositório e GCS
 
 | Caminho | Conteúdo |
